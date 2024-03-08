@@ -1,0 +1,97 @@
+<!-- src/main/resources/static/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>数据统计</title>
+	<style>
+
+		a:link, a:visited, a:hover, a:active {
+			text-decoration: none;
+		}
+
+		.position1
+		{
+			position:absolute;
+			left:70px;
+			top:60px;
+		}
+
+		.white{
+			color: white;
+			font-size: 40px;
+		}
+
+		#chart-wrap{
+			width:160%;
+			height:160%;
+			transform: scale(160%); /* 放大两倍 */
+			transform-origin: left top; /* 设置缩放的起点 */
+			border:solid 1px transparent; /* 将边框设置为透明 */
+			position:relative;
+			top:40px;
+			left:150px;
+		}
+
+		#frame
+		{
+			width:769px;
+			height:343px;
+			margin-left: 30px;
+			overflow: hidden;
+			position: relative;
+			/* border:1px solid darkorchid;*/
+		}
+		#frame .photos {
+			width:3076px;
+			height:343px;
+			animation: move 10s ease infinite;
+		}
+		#frame .photos img
+		{
+			width:769px;
+			height:343px;
+			float:left;
+		}
+		@keyframes move
+		{
+			0%, 15% {margin-left: 0;}
+			25%, 40% {margin-left: -769px;}
+			55%, 70% {margin-left: -1538px;}
+			85%, 100% {margin-left: -2307px;}
+		}
+
+
+	</style>
+</head>
+<body>
+<div >
+	<img src="../image/logo.png" width="150">
+	<a href=" ">首页</a>
+	<a href=" ">关于大会</a>
+	<a href=" ">大会议程</a>
+	<a href=" ">大咖云集</a>
+	<a href=" ">精彩活动</a>
+	<a href=" ">展商风采</a>
+	<a href=" ">成果发布</a>
+	<a href=" ">媒体中心</a>
+	<a href=" ">参会展商</a>
+	<a href=" ">大会直播</a>
+</div>
+<hr>
+<div >
+	<img src="../image/2.png" style="display: block;width: 100%;height: 100px">
+</div>
+<div class="position1">
+	<h1 class="white">格致论道·西湖论剑</h1>
+</div>
+<div id="frame">
+	<div class="photos">
+		<img src="../image/a.jpg" height="342" width="759"/>
+		<img src="../image/b.jpg" height="342" width="759"/>
+		<img src="../image/c.jpg" height="342" width="759"/>
+		<img src="../image/d.jpg" height="342" width="759"/>
+	</div>
+</div>
+</body>
+</html>

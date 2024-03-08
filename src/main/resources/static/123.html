@@ -1,0 +1,135 @@
+<!-- src/main/resources/static/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>数据统计</title>
+	<style>
+
+		a:link, a:visited, a:hover, a:active {
+			text-decoration: none;
+		}
+
+		.position1
+		{
+			position:absolute;
+			left:70px;
+			top:60px;
+		}
+
+		.white{
+			color: white;
+			font-size: 40px;
+		}
+
+		#chart-wrap{
+			width:160%;
+			height:160%;
+			transform: scale(160%); /* 放大两倍 */
+			transform-origin: left top; /* 设置缩放的起点 */
+			border:solid 1px transparent; /* 将边框设置为透明 */
+			position:relative;
+			top:40px;
+			left:150px;
+		}
+
+		.bar {
+			width: 40px; /* 或者其他你希望的宽度 */
+			background-color: pink; /* 或者其他你希望的背景色 */
+			/* 其他样式 */
+		}
+
+	</style>
+</head>
+<body>
+<div >
+	<img src="../image/logo.png" width="150">
+	<a href=" ">首页</a>
+	<a href=" ">关于大会</a>
+	<a href=" ">大会议程</a>
+	<a href=" ">大咖云集</a>
+	<a href=" ">精彩活动</a>
+	<a href=" ">展商风采</a>
+	<a href=" ">成果发布</a>
+	<a href=" ">媒体中心</a>
+	<a href=" ">参会展商</a>
+	<a href=" ">大会直播</a>
+</div>
+<hr>
+<div >
+	<img src="../image/2.png" style="display: block;width: 100%;height: 100px">
+</div>
+<div class="position1">
+	<h1 class="white">数据统计</h1>
+</div>
+<div id="chart-wrap"></div>
+<script>
+	function renderChart(data) {
+		var cw = document.getElementById("chart-wrap");
+		cw.innerHTML = "";
+		var max = 0;
+		for (var index in data) {
+			if (data[index] > max)
+				max = data[index];
+		}
+		var percent = 180 / max;
+		var i = 0;
+		for (var index in data) {
+			var bar = document.createElement("div");
+			bar.className = 'bar';
+			bar.id = index + "_" + data[index];
+			bar.style.height = Math.round(percent * data[index]) + "px";
+			bar.style.width = "40px";
+			bar.style.left = (i * 75) + 120 + "px";
+			bar.style.marginLeft = (i * 20) + "px";
+			bar.style.position = "absolute";
+			bar.style.background = "none repeat scroll 0 0 pink";
+			bar.style.overflow = "hidden";
+			bar.setAttribute("title", index + "£º" + data[index]);
+			bar.style.display = "block";
+			bar.style.top = 200 - Math.round(percent * data[index]) + "px";
+			cw.appendChild(bar);
+			var axis = document.createElement("div");
+			axis.id = "axis_" + i;
+			axis.style.width = "40px";
+			axis.style.left = (i * 75) + 120 + "px";
+			axis.style.marginLeft = (i * 20) + "px";
+			axis.style.textAlign = "center";
+			axis.style.position = "absolute";
+			axis.style.top = "205px";
+			axis.innerHTML = '<span style="font-size:12px; color:grey;"> ' + i + '</span>';
+			cw.appendChild(axis);
+			i++;
+		}
+		for (var i = 0; i < 5; i++) {
+			var ayis = document.createElement("div");
+			ayis.style.width = "30px";
+			ayis.style.position = "absolute";
+			ayis.style.top = (36 * i) + (20 - 6) + "px";
+			ayis.style.left = "50px";
+			ayis.innerHTML = '<span style="font-size:12px; color:grey;"> ' + Math.round(max - (max / 5) * i) + '</span>';
+			cw.appendChild(ayis);
+			var line = document.createElement("div");
+			line.setAttribute("style", "width:580px; left:75px; border-top:1px dotted grey; height:1px; line-height:1px; display:block; overflow:hidden; position:absolute; ");
+			line.style.top = (36 * i) + 20 + "px";
+			cw.appendChild(line);
+		}
+	}
+	async function fetchData() {
+		try {
+			const response = await fetch('http://localhost:8080/api/hello/data');
+			if (!response.ok) {
+				throw new Error('Network response was not ok ' + response.statusText);
+			}
+			const data = await response.json();
+			console.log(data);
+			renderChart(data);
+		} catch (error) {
+			console.error('There has been a problem with your fetch operation:', error);
+		}
+	}
+	window.onload = fetchData;
+</script>
+
+</body>
+</html>
